@@ -18,7 +18,7 @@ import java.util.Set;
 public class Report {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "date")
     private Date date;

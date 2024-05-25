@@ -15,11 +15,8 @@ import java.util.Set;
 @Setter
 @Getter
 @Table(name = "enterprise")
-public class Enterprise {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Enterprise extends Member{
+
     @Column(name = "company_name")
     private String companyName;
     @Column(name = "tax_code")
@@ -32,4 +29,6 @@ public class Enterprise {
 
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL)
     private Set<ReportDetail> reportDetails;
+
+
 }

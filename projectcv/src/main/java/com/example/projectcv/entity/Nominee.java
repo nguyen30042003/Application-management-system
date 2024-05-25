@@ -15,12 +15,13 @@ import java.util.Set;
 public class Nominee {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
-    @Column(name = "describe")
-    private String describe;
+    @Column(name = "description")
+    private String description;
 
     @OneToMany(mappedBy = "nominee", cascade = CascadeType.ALL)
     private Set<RecruitmentDetail> recruitmentDetails;

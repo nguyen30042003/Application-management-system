@@ -1,5 +1,6 @@
 package com.example.projectcv.entity;
 
+import com.example.projectcv.entity.composite_key.ApplicationFormKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,18 +14,33 @@ import lombok.Setter;
 @Getter
 @Table(name = "application_form")
 public class ApplicationForm {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @OneToOne
-    @JoinColumn(name = "memberID", referencedColumnName = "id")
-    private Member member;
+    @EmbeddedId
+   private ApplicationFormKey id;
 
     @ManyToOne
-    @JoinColumn(name = "recruitID", referencedColumnName = "id")
+    @MapsId("recruitmentDetailKeyId")
+    @JoinColumns({
+            @JoinColumn(
+                    name = "recruit_id", referencedColumnName = "recruit_id"
+            ),
+            @JoinColumn(
+                    name = "nominee_id", referencedColumnName = "nominee_id"
+            )
+    } )
     private RecruitmentDetail recruitmentDetail;
+
+    @OneToOne
+    @MapsId("candidateId")
+    @JoinColumns(
+            {
+                    @JoinColumn(
+                           referencedColumnName = "id"
+                    )
+            }
+          )
+    private Candidate candidate;
+
+
 
     @Column(name = "is_processed")
     private boolean isProcessed;

@@ -17,7 +17,7 @@ import java.util.Date;
 public class PaymentDetail {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "phase")
@@ -29,7 +29,7 @@ public class PaymentDetail {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "paymentID", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "paymentID", referencedColumnName = "id",nullable = false)
     private Payment payment;
 }

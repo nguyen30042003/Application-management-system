@@ -12,13 +12,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "candidate")
-public class Candidate {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Candidate extends Member{
 
-    @OneToOne
-    @JoinColumn(name = "memberID", referencedColumnName = "id")
-    private Member member;
+    @OneToOne(mappedBy = "candidate")
+    private ApplicationForm applicationForm;
+
 }

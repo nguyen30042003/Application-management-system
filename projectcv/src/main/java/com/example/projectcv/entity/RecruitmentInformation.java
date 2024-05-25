@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,19 +19,21 @@ import java.util.Set;
 public class RecruitmentInformation {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "time")
-    private Date time;
 
-    @ManyToOne
-    @JoinColumn(name = "enterprise_id", referencedColumnName = "id")
+    @Column(name = "time")
+    private Timestamp time;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
     @OneToMany(mappedBy = "recruitmentInformation", cascade = CascadeType.ALL)
     private Set<RecruitmentDetail> recruitmentDetails;
 
-    @OneToOne(mappedBy = "recruitmentInformation")
+    @OneToOne(mappedBy = "recruitmentInformation", optional = false)
+    @PrimaryKeyJoinColumn
     private AdvertisingForm advertisingForm;
 
 }

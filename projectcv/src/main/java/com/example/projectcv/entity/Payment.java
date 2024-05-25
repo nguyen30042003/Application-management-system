@@ -17,7 +17,7 @@ import java.util.Set;
 public class Payment {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "total_payment")
     private long totalPayment;
@@ -28,12 +28,13 @@ public class Payment {
     @Column(name = "status")
     private String status;
 
-    @OneToOne
-    @JoinColumn(name = "recruitID", referencedColumnName = "id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "recruitID", referencedColumnName = "id",nullable = false)
     private RecruitmentInformation recruitmentInformation;
 
-    @OneToOne(mappedBy = "payment")
+    @OneToOne(mappedBy = "payment",optional = false)
     private Invoice invoice;
+
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private Set<PaymentDetail> paymentDetails;

@@ -17,7 +17,7 @@ import java.util.Date;
 public class Profile {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "is_validate")
     private boolean isValidate;

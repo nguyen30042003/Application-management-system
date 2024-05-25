@@ -17,12 +17,12 @@ import java.util.Date;
 public class Invoice {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "date_of_sending")
     private Date dateOfSending;
 
-    @OneToOne
-    @JoinColumn(name = "paymentID", referencedColumnName = "id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "paymentID", referencedColumnName = "id",nullable = false)
     private Payment payment;
 }

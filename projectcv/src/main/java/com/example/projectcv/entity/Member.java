@@ -12,10 +12,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "member")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Member {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name")
     private String name;
@@ -25,9 +26,6 @@ public class Member {
     private String email;
     @Column(name = "contact")
     private String contact;
-
-    @OneToOne(mappedBy = "member")
-    private ApplicationForm applicationForm;
 
 
 }

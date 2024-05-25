@@ -1,5 +1,6 @@
 package com.example.projectcv.entity;
 
+import com.example.projectcv.entity.composite_key.RecruitmentDetailKey;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,24 +14,27 @@ import java.util.Set;
 @Getter
 @Table(name = "recruitment_detail")
 public class RecruitmentDetail {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+
+    @EmbeddedId
+    RecruitmentDetailKey id ;
 
     @Column(name = "quantity")
     private int quantity;
-    @Column(name = "requestedInfo")
+    @Column(name = "requested_info")
     private String requestedInfo;
 
     @ManyToOne
-    @JoinColumn(name = "nomineeID", referencedColumnName = "id")
+    @MapsId("nomineeId")
+    @JoinColumn(name = "nominee_id")
     private Nominee nominee;
 
+
     @ManyToOne
-    @JoinColumn(name = "recruitID", referencedColumnName = "id")
+    @MapsId("recruitId")
+    @JoinColumn(name = "recruit_id")
     private RecruitmentInformation recruitmentInformation;
 
     @OneToMany(mappedBy = "recruitmentDetail")
     private Set<ApplicationForm> applicationForms;
+
 }
