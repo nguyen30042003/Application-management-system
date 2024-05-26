@@ -23,7 +23,7 @@ public class AdvertisingForm {
     AdvertisingFormKey id;
 
     @Column(name = "type")
-    private String type; // enum
+    private Type type; // enum
 
     @MapsId("recruitmentId")
     @OneToOne(optional = false)

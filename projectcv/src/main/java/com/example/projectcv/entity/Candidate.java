@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,8 @@ import lombok.Setter;
 @Table(name = "candidate")
 public class Candidate extends Member{
 
-    @OneToOne(mappedBy = "candidate")
-    private ApplicationForm applicationForm;
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private Set<ApplicationForm> applicationForm;
+
 
 }
