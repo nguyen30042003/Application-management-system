@@ -29,7 +29,7 @@ public class Payment {
     private String status;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "recruitID", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "recruit_id", referencedColumnName = "id",nullable = false)
     private RecruitmentInformation recruitmentInformation;
 
     @OneToOne(mappedBy = "payment",optional = false)

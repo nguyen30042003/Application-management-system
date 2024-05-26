@@ -30,6 +30,6 @@ public class PaymentDetail {
     private Date date;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "paymentID", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id",nullable = false)
     private Payment payment;
 }
