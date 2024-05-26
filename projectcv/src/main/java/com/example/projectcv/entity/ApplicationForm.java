@@ -29,7 +29,7 @@ public class ApplicationForm {
     } )
     private RecruitmentDetail recruitmentDetail;
 
-    @OneToOne
+    @ManyToOne
     @MapsId("candidateId")
     @JoinColumns(
             {
