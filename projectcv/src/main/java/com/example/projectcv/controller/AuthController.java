@@ -19,6 +19,6 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ApiResponse<UserAccount> signUp(@RequestBody SignUpRequest signUpRequest) {
-        return null;
+        return authenticationService.signup(signUpRequest);
     }
 }

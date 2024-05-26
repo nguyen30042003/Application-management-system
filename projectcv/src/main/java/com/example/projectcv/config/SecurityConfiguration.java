@@ -24,10 +24,9 @@ public class SecurityConfiguration{
         http.csrf(
                 AbstractHttpConfigurer::disable).authorizeHttpRequests(
                 request -> request.requestMatchers(
-                               "/hello_world")
-                        .permitAll()
-                        .anyRequest().authenticated()
-        );
+                               "/auth/signup")
+                        .permitAll().anyRequest().authenticated()
+        ) ;
         return http.build();
     }
 
