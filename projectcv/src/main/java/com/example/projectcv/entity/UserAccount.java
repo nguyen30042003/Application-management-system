@@ -1,6 +1,9 @@
 package com.example.projectcv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,14 +13,16 @@ import java.util.List;
 
 @Table(name = "account")
 @Entity
+@Getter
+@Setter
 public class UserAccount implements UserDetails {
 
     @Id
     long id;
 
-    @OneToOne(optional = false)
-    @MapsId("id")
-    @JoinColumn( name = "member_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn( name = "id", referencedColumnName = "id" , nullable = false)
     private Member member ;
 
     Role role;

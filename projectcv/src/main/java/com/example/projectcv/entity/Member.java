@@ -1,5 +1,6 @@
 package com.example.projectcv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,11 @@ public class Member {
     private String email;
     @Column(name = "contact")
     private String contact;
+
+    @OneToOne(mappedBy = "member",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
+    private UserAccount userAccount;
 
 
 }
