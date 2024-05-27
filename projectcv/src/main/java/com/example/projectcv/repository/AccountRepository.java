@@ -3,6 +3,8 @@ package com.example.projectcv.repository;
 import com.example.projectcv.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountRepository extends JpaRepository<UserAccount,Long> {
+import java.util.Optional;
 
+public interface AccountRepository extends JpaRepository<UserAccount,Long> {
+        Optional<UserAccount> findByMemberEmail(String email);
 }

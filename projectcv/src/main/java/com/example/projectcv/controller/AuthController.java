@@ -1,7 +1,9 @@
 package com.example.projectcv.controller;
 
+import com.example.projectcv.dto.request.SignInRequest;
 import com.example.projectcv.dto.request.SignUpRequest;
 import com.example.projectcv.dto.response.ApiResponse;
+import com.example.projectcv.dto.response.SignInResponse;
 import com.example.projectcv.entity.UserAccount;
 import com.example.projectcv.services.AuthenticationService;
 
@@ -21,4 +23,10 @@ public class AuthController {
     public ApiResponse<UserAccount> signUp(@RequestBody SignUpRequest signUpRequest) {
         return authenticationService.signup(signUpRequest);
     }
+
+    @PostMapping("/signin")
+    public SignInResponse signIn(@RequestBody SignInRequest signInRequest) {
+        return authenticationService.signIn(signInRequest);
+    }
+
 }
