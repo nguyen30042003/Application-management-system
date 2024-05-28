@@ -1,5 +1,6 @@
 package com.example.projectcv.dto.response;
 
+import com.example.projectcv.entity.Member;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,10 @@ public class ApiResponse<T> {
     private T data;
     private String message;
     private int code = 1000;
+
+    public ApiResponse(T t) {
+        this.data = t;
+    }
 
     public int getCode() {
         return code;
