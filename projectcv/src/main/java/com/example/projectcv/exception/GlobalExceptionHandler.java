@@ -1,6 +1,7 @@
 package com.example.projectcv.exception;
 
 import com.example.projectcv.dto.response.ApiResponse;
+import com.example.projectcv.dto.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,20 +11,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<ApiResponse> handleRuntimeException(RuntimeException exception) {
-        System.out.println("handle runtime Exception");
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(1001);
-        apiResponse.setMessage(exception.getMessage());
-        return ResponseEntity.badRequest().body(apiResponse);
+    ResponseEntity<String> handleRuntimeException(RuntimeException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
     @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
+    ResponseEntity<ErrorResponse> handlingAppException(AppException exception) {
         System.out.println("handle app Exception");
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(exception.getErrorCode().getCode());
-        apiResponse.setMessage(exception.getErrorCode().getMessage());
-        return ResponseEntity.status(exception.getErrorCode().getHttpStatusCode()).body(apiResponse);
+       ErrorCode errorCode = exception.getErrorCode();
+
+
+       ErrorResponse errorResponse = new ErrorResponse(errorCode.getMessage(),errorCode.getCode());
+
+        return ResponseEntity.status(errorCode.getHttpStatusCode()).body(errorResponse);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
