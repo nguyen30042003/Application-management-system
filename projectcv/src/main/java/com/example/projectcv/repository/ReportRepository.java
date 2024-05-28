@@ -9,5 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    List<RecruitmentDetail> findByDateBetween(Date startDate, Date endDate);
+  //  List<RecruitmentDetail> findByDateBetween(Date startDate, Date endDate);
 }

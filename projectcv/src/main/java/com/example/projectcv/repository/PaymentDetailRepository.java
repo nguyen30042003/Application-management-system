@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface PaymentDetailRepository extends JpaRepository<PaymentDetail, Long> {
-    List<PaymentDetail> findByAmountBetween(double minAmount, double maxAmount);
-
-    List<PaymentDetail> findByDateBetween(Date startDate, Date endDate);
+//    List<PaymentDetail> findByAmountBetween(double minAmount, double maxAmount);
+//
+//    List<PaymentDetail> findByDateBetween(Date startDate, Date endDate);
 }

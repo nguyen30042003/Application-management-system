@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface NomineeRepository extends JpaRepository<Nominee, Long> {
-    List<Nominee> findByName(String name);
+  //  List<Nominee> findByName(String name);
 
 }

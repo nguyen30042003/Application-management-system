@@ -19,12 +19,11 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
-        System.out.println("handle runtime Exception");
-        ErrorCode errorCode = exception.getErrorCode();
+        System.out.println("handle app Exception");
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(errorCode.getCode());
-        apiResponse.setMessage(errorCode.getMessage());
-        return ResponseEntity.badRequest().body(apiResponse);
+        apiResponse.setCode(exception.getErrorCode().getCode());
+        apiResponse.setMessage(exception.getErrorCode().getMessage());
+        return ResponseEntity.status(exception.getErrorCode().getHttpStatusCode()).body(apiResponse);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

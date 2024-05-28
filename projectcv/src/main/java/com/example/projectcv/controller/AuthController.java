@@ -7,6 +7,7 @@ import com.example.projectcv.dto.response.SignInResponse;
 import com.example.projectcv.entity.UserAccount;
 import com.example.projectcv.services.AuthenticationService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ApiResponse<UserAccount> signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ApiResponse<UserAccount> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         return authenticationService.signup(signUpRequest);
     }
 

@@ -17,10 +17,10 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Enterprise create(EnterpriseRequest enterpriseRequest) {
         Enterprise enterprise = new Enterprise();
-        if(enterpriseRepository.existsByCompanyName(enterpriseRequest.getCompanyName()))
-        {
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
+//        if(enterpriseRepository.existsByCompanyName(enterpriseRequest.getCompanyName()))
+//        {
+//            throw new AppException(ErrorCode.USER_EXISTED);
+//        }
         enterprise.setName(enterpriseRequest.getName());
         enterprise.setAddress(enterpriseRequest.getAddress());
         enterprise.setEmail(enterpriseRequest.getEmail());

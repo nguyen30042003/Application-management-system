@@ -7,5 +7,5 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface RecruitmentInformationRepository extends JpaRepository<RecruitmentInformation, Long> {
-    List<RecruitmentInformation> findByTimeBetween(Timestamp startTime, Timestamp endTime);
+   // List<RecruitmentInformation> findByTimeBetween(Timestamp startTime, Timestamp endTime);
 }
