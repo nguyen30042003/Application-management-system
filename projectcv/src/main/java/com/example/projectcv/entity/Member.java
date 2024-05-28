@@ -23,7 +23,7 @@ public class Member {
     private String name;
     @Column(name = "address")
     private String address;
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
     @Column(name = "contact")
     private String contact;
