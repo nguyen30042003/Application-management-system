@@ -1,13 +1,17 @@
 package com.example.projectcv.services.serviceImpl;
 
 import com.example.projectcv.dto.request.EnterpriseRequest;
+import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.Enterprise;
+import com.example.projectcv.entity.Member;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.EnterpriseRepository;
 import com.example.projectcv.services.EnterpriseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -29,5 +33,17 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         enterprise.setTaxCode(enterpriseRequest.getTaxCode());
         enterprise.setDateOfExpiration(enterpriseRequest.getDateOfExpiration());
         return enterpriseRepository.saveAndFlush(enterprise);
+    }
+
+    @Override
+    public ApiResponse<Enterprise> getById(Long id) {
+        Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
+        if(enterprise.isPresent()) {
+            ApiResponse<Enterprise> apiResponse = new ApiResponse<>();
+            apiResponse.setData(enterprise.get());
+            return apiResponse;
+        } else {
+            throw new RuntimeException("Enterprise not found");
+        }
     }
 }

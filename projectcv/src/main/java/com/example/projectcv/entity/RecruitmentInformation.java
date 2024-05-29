@@ -32,7 +32,7 @@ public class RecruitmentInformation {
     @OneToMany(mappedBy = "recruitmentInformation", cascade = CascadeType.ALL)
     private Set<RecruitmentDetail> recruitmentDetails;
 
-    @OneToOne(mappedBy = "recruitmentInformation", optional = false)
+    @OneToOne(mappedBy = "recruitmentInformation", optional = true)
     @PrimaryKeyJoinColumn
     private AdvertisingForm advertisingForm;
 
