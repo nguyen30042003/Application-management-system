@@ -1,5 +1,7 @@
 package com.example.projectcv.dto.request;
 
+import com.example.projectcv.Validator.EmailConstraint;
+import com.example.projectcv.Validator.PasswordConstraint;
 import com.example.projectcv.entity.UserAccount;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,15 +12,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class SignUpRequest {
 
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is mandatory")
+
+    @EmailConstraint(message = "INVALID_EMAIL")
     private String email;
 
-    @Size(min = 1, message = "Password must be at least 8 characters")
-    @NotBlank(message = "Password is mandatory")
+    @PasswordConstraint(message = "INVALID_PASSWORD")
     private String password;
 
-    @NotBlank(message = "Address is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     @NotBlank(message = "Address is mandatory")
