@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +29,12 @@ public class Member {
     private String email;
     @Column(name = "contact")
     private String contact;
+
+    @Column(name = "is_validated")
+    private boolean isValidated ;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @OneToOne(optional = false , mappedBy = "member",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn

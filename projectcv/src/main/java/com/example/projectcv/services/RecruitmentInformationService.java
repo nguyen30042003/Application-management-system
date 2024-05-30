@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface RecruitmentInformationService {
     Page<RecruitmentInformation> getRecruitmentInformation(Pageable pageable);
     ApiResponse<RecruitmentInformation> getByID(Long id);
-    ApiResponse<RecruitmentInformation> update(Long id, RecruitmentInformationDTO recruitmentInformationDTO);
-    ApiResponse<RecruitmentInformation> create(RecruitmentInformationDTO recruitmentInformationDTO);
+   // ApiResponse<RecruitmentInformation> update(Long id, RecruitmentInformationDTO recruitmentInformationDTO);
+   // ApiResponse<RecruitmentInformation> create(RecruitmentInformationDTO recruitmentInformationDTO);
     void delete(Long id);
 }

@@ -22,3 +22,4 @@ public class EnterpriseRequest {
     private Date dateOfExpiration;
     private String password;
 }
+

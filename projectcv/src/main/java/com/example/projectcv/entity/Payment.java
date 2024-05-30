@@ -1,11 +1,13 @@
 package com.example.projectcv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "total_payment")
-    private long totalPayment;
+    private BigDecimal totalPayment;
 
     @Column(name = "is_full_payment")
     private boolean isFullPayment;
@@ -28,11 +30,12 @@ public class Payment {
     @Column(name = "status")
     private String status;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "recruit_id", referencedColumnName = "id",nullable = false)
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "recruit_id", referencedColumnName = "id")
     private RecruitmentInformation recruitmentInformation;
 
-    @OneToOne(mappedBy = "payment",optional = false)
+    @OneToOne(mappedBy = "payment")
     private Invoice invoice;
 
 

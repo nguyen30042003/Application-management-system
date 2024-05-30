@@ -1,7 +1,6 @@
 package com.example.projectcv.controller;
 
 import com.example.projectcv.dto.request.NomineeDTO;
-import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.Nominee;
 import com.example.projectcv.entity.RecruitmentInformation;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/nominee")
+@RequestMapping("/nominees")
 public class NomineeController {
     private NomineeServiceImpl nomineeService;
 
@@ -23,7 +22,7 @@ public class NomineeController {
         return nomineeService.getNominee(pageable);
     }
     @PostMapping()
-    public ApiResponse<Nominee> signUp(@RequestBody NomineeDTO nomineeDTO) {
+    public ApiResponse<Nominee> create(@RequestBody NomineeDTO nomineeDTO) {
         return nomineeService.create(nomineeDTO);
     }
 }
