@@ -28,7 +28,7 @@ public class Member {
     @Column(name = "contact")
     private String contact;
 
-    @OneToOne(mappedBy = "member",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(optional = false , mappedBy = "member",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn
     @JsonIgnore
     private UserAccount userAccount;

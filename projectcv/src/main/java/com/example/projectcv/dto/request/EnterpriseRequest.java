@@ -20,5 +20,5 @@ public class EnterpriseRequest {
     private String companyName;
     private String taxCode;
     private Date dateOfExpiration;
-
+    private String password;
 }

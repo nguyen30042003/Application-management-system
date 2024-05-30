@@ -17,7 +17,7 @@ public class ApplicationForm {
     @EmbeddedId
    private ApplicationFormKey id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("recruitmentDetailKeyId")
     @JoinColumns({
             @JoinColumn(

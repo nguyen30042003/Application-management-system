@@ -20,7 +20,7 @@ public class UserAccount implements UserDetails {
     @Id
     long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     @MapsId
     @JoinColumn( name = "id", referencedColumnName = "id" , nullable = false)
     private Member member ;
@@ -65,7 +65,5 @@ public class UserAccount implements UserDetails {
         return true;
     }
 
-    public Member getMember() {
-        return member;
-    }
+
 }

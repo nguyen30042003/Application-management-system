@@ -23,9 +23,9 @@ public class RecruitmentDetail {
     @Column(name = "requested_info")
     private String requestedInfo;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("nomineeId")
-    @JoinColumn(name = "nominee_id")
+    @JoinColumn(name = "nominee_id",nullable = false)
     private Nominee nominee;
 
 

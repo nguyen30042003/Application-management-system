@@ -4,13 +4,19 @@ import com.example.projectcv.dto.request.EnterpriseRequest;
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.Enterprise;
 import com.example.projectcv.entity.Member;
+import com.example.projectcv.entity.Role;
+import com.example.projectcv.entity.UserAccount;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.EnterpriseRepository;
+import com.example.projectcv.repository.MemberRepository;
 import com.example.projectcv.services.EnterpriseService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Relation;
 import java.util.Optional;
 
 
@@ -18,13 +24,29 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EnterpriseServiceImpl implements EnterpriseService {
     private EnterpriseRepository enterpriseRepository;
+    private MemberRepository memberRepository;
+    private PasswordEncoder passwordEncoder;
+
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Enterprise create(EnterpriseRequest enterpriseRequest) {
+        if(memberRepository.existsByEmail(enterpriseRequest.getEmail()))
+        {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
+        UserAccount userAccount = new UserAccount();
+        userAccount.setRole(Role.ENTERPRISE);
+        userAccount.setPassword(passwordEncoder.encode(enterpriseRequest.getPassword()));
+        Enterprise enterprise = getEnterprise(enterpriseRequest, userAccount);
+
+        return enterpriseRepository.saveAndFlush(enterprise);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    private static Enterprise getEnterprise(EnterpriseRequest enterpriseRequest, UserAccount userAccount) {
         Enterprise enterprise = new Enterprise();
-//        if(enterpriseRepository.existsByCompanyName(enterpriseRequest.getCompanyName()))
-//        {
-//            throw new AppException(ErrorCode.USER_EXISTED);
-//        }
+
         enterprise.setName(enterpriseRequest.getName());
         enterprise.setAddress(enterpriseRequest.getAddress());
         enterprise.setEmail(enterpriseRequest.getEmail());
@@ -32,7 +54,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         enterprise.setCompanyName(enterpriseRequest.getCompanyName());
         enterprise.setTaxCode(enterpriseRequest.getTaxCode());
         enterprise.setDateOfExpiration(enterpriseRequest.getDateOfExpiration());
-        return enterpriseRepository.saveAndFlush(enterprise);
+        enterprise.setUserAccount(userAccount);
+        userAccount.setMember(enterprise);
+        return enterprise;
     }
 
     @Override
@@ -46,4 +70,5 @@ public class EnterpriseServiceImpl implements EnterpriseService {
             throw new RuntimeException("Enterprise not found");
         }
     }
+
 }

@@ -25,14 +25,14 @@ public class RecruitmentInformation {
     @Column(name = "time")
     private Timestamp time;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "enterprise_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "enterprise_id",nullable = false)
     private Enterprise enterprise;
 
     @OneToMany(mappedBy = "recruitmentInformation", cascade = CascadeType.ALL)
     private Set<RecruitmentDetail> recruitmentDetails;
 
-    @OneToOne(mappedBy = "recruitmentInformation", optional = true)
+    @OneToOne(mappedBy = "recruitmentInformation",optional = false)
     @PrimaryKeyJoinColumn
     private AdvertisingForm advertisingForm;
 

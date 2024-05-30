@@ -32,7 +32,6 @@ public class AdvertisingForm {
                     @JoinColumn(
                             referencedColumnName = "id",nullable = false
                     )
-
             }
     )
 

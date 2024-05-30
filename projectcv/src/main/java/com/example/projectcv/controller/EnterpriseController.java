@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/enterprise")
+@RequestMapping("/enterprises")
 @AllArgsConstructor
 public class EnterpriseController {
     private EnterpriseService enterpriseService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ApiResponse<Enterprise> create(@RequestBody EnterpriseRequest enterpriseRequest)
     {
         ApiResponse<Enterprise> apiResponse = new ApiResponse<>();

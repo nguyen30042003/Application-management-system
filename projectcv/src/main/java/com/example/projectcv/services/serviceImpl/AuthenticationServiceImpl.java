@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private MemberRepository memberRepository;
     @Override
     public ApiResponse<UserAccount> signup(SignUpRequest signUpRequest) {
-            if(memberRepository.existsByEmail(signUpRequest.getEmail()))
+        if(memberRepository.existsByEmail(signUpRequest.getEmail()))
         {
             throw new AppException(ErrorCode.USER_EXISTED);
         }

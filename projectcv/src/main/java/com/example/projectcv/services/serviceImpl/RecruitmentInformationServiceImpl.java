@@ -52,7 +52,9 @@ public class RecruitmentInformationServiceImpl implements RecruitmentInformation
     public ApiResponse<RecruitmentInformation> create(RecruitmentInformationDTO recruitmentInformationDTO) {
         RecruitmentInformation recruitmentInformation = new RecruitmentInformation();
         recruitmentInformation.setTime(recruitmentInformationDTO.getTime());
+
         Enterprise enterprise = enterpriseService.getById(recruitmentInformationDTO.getEnterpriseID()).getData();
+
         recruitmentInformation.setEnterprise(enterprise);
         recruitmentInformationRepository.saveAndFlush(recruitmentInformation);
         return new ApiResponse<>(recruitmentInformation);
