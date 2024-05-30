@@ -16,7 +16,7 @@ public class SignUpRequest {
     @EmailConstraint(message = "INVALID_EMAIL")
     private String email;
 
-    @PasswordConstraint(message = "INVALID_PASSWORD")
+    @PasswordConstraint(message = "Password must have more than 8 characters including numbers, capital letters and special characters")
     private String password;
 
     @NotBlank(message = "Name is mandatory")

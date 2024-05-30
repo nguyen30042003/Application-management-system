@@ -5,6 +5,8 @@ import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.dto.response.Meta;
 import com.example.projectcv.dto.response.PageResponse;
 import com.example.projectcv.entity.Member;
+import com.example.projectcv.exception.AppException;
+import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.AccountRepository;
 import com.example.projectcv.repository.MemberRepository;
 import com.example.projectcv.services.MemberService;
@@ -50,7 +52,8 @@ public class MemberServiceImpl implements MemberService {
             apiResponse.setData(member.get());
             return apiResponse;
         } else {
-            throw new RuntimeException("Member not found");
+            throw new AppException(ErrorCode.MEMBER_NOT_EXISTED);
+
         }
     }
 

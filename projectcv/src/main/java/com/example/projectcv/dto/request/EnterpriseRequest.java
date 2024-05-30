@@ -33,7 +33,7 @@ public class EnterpriseRequest {
     @NotNull(message = "Date of expiration  not null")
     private Date dateOfExpiration;
 
-    @PasswordConstraint(message = "INVALID_PASSWORD")
+    @PasswordConstraint(message = "Password must have more than 8 characters including numbers, capital letters and special characters")
     private String password;
 }
 

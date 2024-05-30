@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 
 import javax.management.relation.Relation;
 import java.util.Date;
@@ -80,7 +81,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isEmpty()) {
-            throw new RuntimeException("Enterprise not found");
+            throw new AppException(ErrorCode.ENTERPRISE_NOT_EXISTED);
 
         }
         Enterprise newEnterprise = enterprise.get();
@@ -100,7 +101,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
             Optional<Nominee> nominee = nomineeRepository.findById(recruitmentDetailDTO.getNomineeId());
             if(nominee.isEmpty()) {
-                throw new RuntimeException("Nominee not found");
+                throw new AppException(ErrorCode.NOMINEE_NOT_EXISTED);
+
             }
             Nominee newNominee = nominee.get();
             recruitmentDetail.setNominee(newNominee);

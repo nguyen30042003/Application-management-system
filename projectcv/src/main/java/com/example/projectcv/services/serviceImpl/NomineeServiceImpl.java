@@ -32,7 +32,8 @@ public class NomineeServiceImpl implements NomineeService {
             return new ApiResponse<>(nominee.get());
         }
         else{
-            throw new RuntimeException("Not exist nominee");
+            throw new AppException(ErrorCode.NOMINEE_NOT_EXISTED);
+
         }
 
     }
