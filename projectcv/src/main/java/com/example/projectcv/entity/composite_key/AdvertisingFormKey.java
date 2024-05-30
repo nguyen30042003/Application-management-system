@@ -9,8 +9,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 
 @Embeddable
-@Setter
-@Getter
+
 public class AdvertisingFormKey {
     @Column(name = "recruitment_id")
     long recruitmentId;

@@ -1,15 +1,13 @@
 package com.example.projectcv.services.serviceImpl;
 
 import com.example.projectcv.dto.request.EnterpriseRequest;
+import com.example.projectcv.dto.request.RecruitmentDetailDTO;
+import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
-import com.example.projectcv.entity.Enterprise;
-import com.example.projectcv.entity.Member;
-import com.example.projectcv.entity.Role;
-import com.example.projectcv.entity.UserAccount;
+import com.example.projectcv.entity.*;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
-import com.example.projectcv.repository.EnterpriseRepository;
-import com.example.projectcv.repository.MemberRepository;
+import com.example.projectcv.repository.*;
 import com.example.projectcv.services.EnterpriseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,16 +15,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.Relation;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
 
 
 @Service
 @AllArgsConstructor
 public class EnterpriseServiceImpl implements EnterpriseService {
+    private final PaymentRepository paymentRepository;
+    private final RecruitmentInformationRepository recruitmentInformationRepository;
     private EnterpriseRepository enterpriseRepository;
     private MemberRepository memberRepository;
     private PasswordEncoder passwordEncoder;
-
+    private NomineeRepository nomineeRepository;
     @Override
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Enterprise create(EnterpriseRequest enterpriseRequest) {
@@ -69,6 +71,60 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         } else {
             throw new RuntimeException("Enterprise not found");
         }
+    }
+
+
+    @PreAuthorize("hasAuthority('ENTERPRISE')")
+    @Override
+    public ApiResponse<RecruitmentInformation> createRecruitment(Long id, RecruitmentInformationDTO recruitmentCreationDTO) {
+
+        Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
+        if(enterprise.isEmpty()) {
+            throw new RuntimeException("Enterprise not found");
+
+        }
+        Enterprise newEnterprise = enterprise.get();
+
+        RecruitmentInformation recruitmentInformation = new RecruitmentInformation();
+        recruitmentInformation.setTime(new Date());
+        recruitmentInformation.setEnterprise(newEnterprise);
+
+        Payment payment = new Payment();
+        payment.setFullPayment(recruitmentCreationDTO.getPayment().isFullPayment());
+        payment.setStatus("done");
+
+
+        for (RecruitmentDetailDTO recruitmentDetailDTO: recruitmentCreationDTO.getNominees()){
+            RecruitmentDetail recruitmentDetail = new RecruitmentDetail();
+            recruitmentDetail.setQuantity(recruitmentDetailDTO.getQuantity());
+
+            Optional<Nominee> nominee = nomineeRepository.findById(recruitmentDetailDTO.getNomineeId());
+            if(nominee.isEmpty()) {
+                throw new RuntimeException("Nominee not found");
+            }
+            Nominee newNominee = nominee.get();
+            recruitmentDetail.setNominee(newNominee);
+           if ( newNominee.getRecruitmentDetails() == null ) {
+                newNominee.setRecruitmentDetails(new HashSet<>());
+           }
+           newNominee.getRecruitmentDetails().add(recruitmentDetail);
+
+            recruitmentDetail.setRecruitmentInformation(recruitmentInformation);
+            if(recruitmentInformation.getRecruitmentDetails() == null)
+                recruitmentInformation.setRecruitmentDetails(new HashSet<>());
+
+            recruitmentInformation.addRecruitmentDetail(recruitmentDetail);
+
+            recruitmentDetail.setRequestedInfo(recruitmentDetailDTO.getRequestedInfo());
+        }
+        recruitmentInformation.setPayment(payment);
+       // payment.setRecruitmentInformation(recruitmentInformation);
+
+
+        recruitmentInformationRepository.save(recruitmentInformation);;
+        ApiResponse<RecruitmentInformation> apiResponse = new ApiResponse<>();
+        apiResponse.setData(recruitmentInformation);
+        return apiResponse;
     }
 
 }

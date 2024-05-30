@@ -16,7 +16,7 @@ import java.util.Set;
 public class RecruitmentDetail {
 
     @EmbeddedId
-    RecruitmentDetailKey id ;
+    RecruitmentDetailKey id = new RecruitmentDetailKey();
 
     @Column(name = "quantity")
     private int quantity;
@@ -34,7 +34,7 @@ public class RecruitmentDetail {
     @JoinColumn(name = "recruit_id")
     private RecruitmentInformation recruitmentInformation;
 
-    @OneToMany(mappedBy = "recruitmentDetail")
+    @OneToMany(mappedBy = "recruitmentDetail",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ApplicationForm> applicationForms;
 
 }

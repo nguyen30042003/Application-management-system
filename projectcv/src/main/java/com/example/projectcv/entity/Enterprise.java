@@ -1,5 +1,6 @@
 package com.example.projectcv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Enterprise extends Member{
     @Column(name = "date_of_expiration")
     private Date dateOfExpiration;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "enterprise", cascade = CascadeType.ALL)
     private Set<RecruitmentInformation> recruitmentInformations;
 

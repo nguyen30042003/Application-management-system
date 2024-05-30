@@ -20,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -41,6 +42,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
        userAccount.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
        Candidate candidate = new Candidate();
+       candidate.setValidated(true);
+       candidate.setCreatedAt(new Date());
        candidate.setAddress(signUpRequest.getAddress());
        candidate.setEmail(signUpRequest.getEmail());
        candidate.setContact(signUpRequest.getContact());

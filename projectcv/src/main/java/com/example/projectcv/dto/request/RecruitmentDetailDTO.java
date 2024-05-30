@@ -14,6 +14,6 @@ import lombok.Setter;
 public class RecruitmentDetailDTO {
     private int quantity;
     private String requestedInfo;
-    private Long recruitmentInformationID;
-    private Long nomineeID;
+    private Long recruitmentInformationId;
+    private Long nomineeId;
 }

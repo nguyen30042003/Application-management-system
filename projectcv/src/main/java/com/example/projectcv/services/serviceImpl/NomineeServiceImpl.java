@@ -10,6 +10,7 @@ import com.example.projectcv.services.NomineeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -44,7 +45,9 @@ public class NomineeServiceImpl implements NomineeService {
         return new ApiResponse<>(nomineeRepository.saveAndFlush(nominee));
     }
 
+
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ApiResponse<Nominee> create(NomineeDTO nomineeDTO) {
         Nominee nominee = new Nominee();
         nominee.setName(nomineeDTO.getName());

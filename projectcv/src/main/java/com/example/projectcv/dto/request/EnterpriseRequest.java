@@ -36,3 +36,4 @@ public class EnterpriseRequest {
     @PasswordConstraint(message = "INVALID_PASSWORD")
     private String password;
 }
+

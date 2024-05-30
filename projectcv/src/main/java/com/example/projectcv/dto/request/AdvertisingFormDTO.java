@@ -13,6 +13,6 @@ import java.sql.Timestamp;
 @Setter
 public class AdvertisingFormDTO {
     private Type type;
-    private Timestamp recruitmentTime;
-    private Long recruitmentInformationID;
+
+
 }
