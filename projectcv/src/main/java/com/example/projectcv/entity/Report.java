@@ -25,4 +25,9 @@ public class Report {
 
     @OneToMany(mappedBy = "report", cascade = CascadeType.ALL)
     private Set<ReportDetail> reportDetails;
+
+    public void addReportDetails (ReportDetail reportDetail){
+        reportDetails.add(reportDetail);
+    }
+
 }
