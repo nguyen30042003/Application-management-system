@@ -5,6 +5,7 @@ import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.Enterprise;
 import com.example.projectcv.entity.Report;
 import com.example.projectcv.entity.ReportDetail;
+import com.example.projectcv.entity.composite_key.ReportDetailKey;
 import com.example.projectcv.repository.EnterpriseRepository;
 import com.example.projectcv.repository.ReportDetailRepository;
 import com.example.projectcv.repository.ReportRepository;
@@ -35,21 +36,23 @@ public class ReportServiceImpl implements ReportService {
         {
             report.get().setReportDetails(new HashSet<>());
         }
-        report.get().setDate(new Date());
 
         Optional<Enterprise> enterprise = enterpriseRepository.findById(reportDetailDTO.getEnterpriseId());
         if (enterprise.isEmpty()) {
             throw new RuntimeException("Enterprise is not found");
         }
+        ReportDetailKey reportDetailKey = new ReportDetailKey(report.get().getId(), enterprise.get().getId());
 
         ReportDetail reportDetail = new ReportDetail();
+        reportDetail.setId(reportDetailKey);
         reportDetail.setStrategy(reportDetailDTO.getStrategy());
         reportDetail.setPotential(reportDetailDTO.isPotential());
         reportDetail.setGreatPotential(reportDetailDTO.isGreatPotential());
-        reportDetail.setEnterprise(enterprise.get());
+        Enterprise enterprise1 = enterprise.get();
+        reportDetail.setEnterprise(enterprise1);
         reportDetail.setReport(report.get());
         report.get().addReportDetails(reportDetail);
-        reportDetailRepository.save(reportDetail);
+        //reportDetailRepository.save(reportDetail);
         reportRepository.saveAndFlush(report.get());
         ApiResponse<Report> apiResponse = new ApiResponse<>();
         apiResponse.setData(report.get());
