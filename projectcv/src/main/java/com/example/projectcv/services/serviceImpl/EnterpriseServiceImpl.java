@@ -76,7 +76,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public ApiResponse<Enterprise> getById(Long id) {
+    public EnterpriseResponse getById(Long id) {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isPresent()) {
             Enterprise newEnterprise = enterprise.get();
