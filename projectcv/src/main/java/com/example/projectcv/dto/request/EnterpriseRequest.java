@@ -30,7 +30,7 @@ public class EnterpriseRequest {
     @NotBlank(message = "Name company not null")
     private String taxCode;
     
-    @NotNull(message = "Date of expiration  not null")
+    //@NotNull(message = "Date of expiration  not null")
     private Date dateOfExpiration;
 
     @PasswordConstraint(message = "Password must have more than 8 characters including numbers, capital letters and special characters")
