@@ -1,6 +1,6 @@
 package com.example.projectcv.entity;
 
-public enum Type {
+public enum AdvertisingType {
     Newspaper,
     Banner_Advertisement,
     Online,

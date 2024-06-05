@@ -18,15 +18,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class PaymentDTO {
 
-    @DecimalMin(value = "0.0", inclusive = false, message = "Total money must be greater than 0")
-    private BigDecimal totalMoney;
+
     @NotNull(message = "Full payment status cannot be null")
     boolean isFullPayment;
-    @NotBlank(message = "Status cannot be null")
-    @Size(min = 1, message = "Status must be between 1 and 50 characters")
-    String status;
 
-    Set<PaymentDetail> paymentDetailSet;
+    String type;
 
     InvoiceDTO invoiceDTO;
     

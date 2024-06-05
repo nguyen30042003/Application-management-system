@@ -1,11 +1,13 @@
 package com.example.projectcv.entity;
 
+import com.example.projectcv.entity.composite_key.PaymentDetailKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -15,21 +17,20 @@ import java.util.Date;
 @Getter
 @Table(name = "payment_detail")
 public class PaymentDetail {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
-    @Column(name = "phase")
-    private int phase;
+
+    @EmbeddedId
+    PaymentDetailKey id = new PaymentDetailKey();
+
     @Column(name = "amount")
-    private double amount;
+    private BigDecimal amount;
     @Column(name = "type")
-    private String type;
+    private PaymentType type;
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @MapsId("paymentId")
     @JoinColumn(name = "payment_id", referencedColumnName = "id",nullable = false)
     private Payment payment;
 }
