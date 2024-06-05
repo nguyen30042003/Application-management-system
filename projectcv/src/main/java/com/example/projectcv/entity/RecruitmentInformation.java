@@ -24,7 +24,7 @@ public class RecruitmentInformation {
     private Long id;
 
     @Column(name = "time")
-    private Date time;
+    private int time;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "enterprise_id",nullable = false)

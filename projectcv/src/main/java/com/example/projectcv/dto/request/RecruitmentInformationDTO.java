@@ -18,11 +18,11 @@ public class RecruitmentInformationDTO {
     @NotNull(message = "Nominees cannot be null")
     private Set<RecruitmentDetailDTO> nominees;
 
-    @Valid
-    @NotNull(message = "Advertising form cannot be null")
-    private AdvertisingFormDTO advertisingForm;
+    private String advertisingType ;
 
     @Valid
     @NotNull(message = "Payment cannot be null")
     private PaymentDTO payment;
+
+    private int time;
 }

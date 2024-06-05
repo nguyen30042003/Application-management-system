@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Embeddable
 
@@ -15,6 +16,6 @@ public class AdvertisingFormKey {
     long recruitmentId;
 
     @Column(name ="recruitment_time")
-    Timestamp recruitmentTime;
+    java.util.Date recruitmentTime = new Date();
 
 }
