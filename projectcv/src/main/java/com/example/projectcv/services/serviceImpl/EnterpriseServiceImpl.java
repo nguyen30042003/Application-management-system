@@ -5,7 +5,6 @@ import com.example.projectcv.dto.request.RecruitmentDetailDTO;
 import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.*;
-import com.example.projectcv.entity.composite_key.AdvertisingFormKey;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.*;
@@ -14,12 +13,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 
-import javax.management.relation.Relation;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 
 @Service
@@ -46,7 +42,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return enterpriseRepository.saveAndFlush(enterprise);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+
     private static Enterprise getEnterprise(EnterpriseRequest enterpriseRequest, UserAccount userAccount) {
         Enterprise enterprise = new Enterprise();
 
@@ -82,7 +78,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isEmpty()) {
             throw new AppException(ErrorCode.ENTERPRISE_NOT_EXISTED);
-
         }
         Enterprise newEnterprise = enterprise.get();
 
@@ -91,10 +86,28 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         recruitmentInformation.setEnterprise(newEnterprise);
 
         Payment payment = new Payment();
-        payment.setFullPayment(recruitmentCreationDTO.getPayment().isFullPayment());
-        payment.setStatus("done");
 
+        payment.setTotalPayment(new BigDecimal(200000));
 
+        payment.setFullPayment(recruitmentCreationDTO.isFullPayment());
+        if (payment.isFullPayment()) {
+            payment.setStatus("done");
+            if(!Objects.equals(recruitmentCreationDTO.getAmount(), payment.getTotalPayment())) {
+             throw new RuntimeException("Amount is not valid");
+            }
+        }
+        else payment.setStatus("not done");
+
+        PaymentDetail paymentDetail = new PaymentDetail();
+        paymentDetail.getId().setPhase(1);
+        paymentDetail.setAmount(recruitmentCreationDTO.getAmount());
+        paymentDetail.setType(PaymentType.valueOf(recruitmentCreationDTO.getTypePayment()));
+        paymentDetail.setDate(new Date());
+        paymentDetail.setPayment(payment);
+        if(payment.getPaymentDetails() == null) {
+            payment.setPaymentDetails(new HashSet<>());
+        }
+        payment.getPaymentDetails().add(paymentDetail);
         for (RecruitmentDetailDTO recruitmentDetailDTO: recruitmentCreationDTO.getNominees()){
             RecruitmentDetail recruitmentDetail = new RecruitmentDetail();
             recruitmentDetail.setQuantity(recruitmentDetailDTO.getQuantity());
@@ -119,11 +132,16 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
             recruitmentDetail.setRequestedInfo(recruitmentDetailDTO.getRequestedInfo());
         }
+
+
+
         recruitmentInformation.setPayment(payment);
         AdvertisingForm advertisingForm = new AdvertisingForm();
-        advertisingForm.setType(Enum.valueOf(Type.class, recruitmentCreationDTO.getAdvertisingType()));
+        advertisingForm.setType(Enum.valueOf(AdvertisingType.class, recruitmentCreationDTO.getAdvertisingType()));
         recruitmentInformation.setAdvertisingForm(advertisingForm);
-       // payment.setRecruitmentInformation(recruitmentInformation);
+        advertisingForm.setRecruitmentInformation(recruitmentInformation);
+
+
 
 
         recruitmentInformationRepository.save(recruitmentInformation);;

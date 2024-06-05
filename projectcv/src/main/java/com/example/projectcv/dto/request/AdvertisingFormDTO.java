@@ -1,12 +1,10 @@
 package com.example.projectcv.dto.request;
 
-import com.example.projectcv.entity.RecruitmentInformation;
-import com.example.projectcv.entity.Type;
+import com.example.projectcv.entity.AdvertisingType;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -14,8 +12,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class AdvertisingFormDTO {
-    @NotNull(message = "Type cannot be null")
-    private Type type;
+    @NotNull(message = "AdvertisingType cannot be null")
+    private AdvertisingType type;
 
     private Timestamp date;
 

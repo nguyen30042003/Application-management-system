@@ -30,7 +30,7 @@ public class Payment {
     @Column(name = "status")
     private String status;
 
-    @JsonIgnore
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "recruit_id", referencedColumnName = "id")
     private RecruitmentInformation recruitmentInformation;

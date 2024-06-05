@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Data
@@ -18,11 +19,11 @@ public class RecruitmentInformationDTO {
     @NotNull(message = "Nominees cannot be null")
     private Set<RecruitmentDetailDTO> nominees;
 
-    private String advertisingType ;
+    private String advertisingType;
 
-    @Valid
-    @NotNull(message = "Payment cannot be null")
-    private PaymentDTO payment;
-
+    private boolean isFullPayment;
+    private String typePayment;
+    private BigDecimal amount;
     private int time;
+
 }

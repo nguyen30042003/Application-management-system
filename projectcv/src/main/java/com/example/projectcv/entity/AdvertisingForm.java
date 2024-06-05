@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 
 @Entity
 @AllArgsConstructor
@@ -23,7 +20,7 @@ public class AdvertisingForm {
     AdvertisingFormKey id = new AdvertisingFormKey();
 
     @Column(name = "type")
-    private Type type; // enum
+    private AdvertisingType type; // enum
 
     @MapsId("recruitmentId")
     @OneToOne(optional = false)

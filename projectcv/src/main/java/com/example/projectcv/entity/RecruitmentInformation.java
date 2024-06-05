@@ -38,11 +38,12 @@ public class RecruitmentInformation {
         recruitmentDetails.add(recruitmentDetail);
     }
 
-
-    @OneToOne(mappedBy = "recruitmentInformation",optional = false)
+    @JsonIgnore
+    @OneToOne(mappedBy = "recruitmentInformation",optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private AdvertisingForm advertisingForm;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "recruitmentInformation",optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Payment payment;
 
