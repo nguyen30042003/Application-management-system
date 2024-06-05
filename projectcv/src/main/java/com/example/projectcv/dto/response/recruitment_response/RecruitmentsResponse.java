@@ -14,5 +14,6 @@ public class RecruitmentsResponse {
     private int time;
     private EnterpriseResponse enterprise = new EnterpriseResponse();
     private List<NomineeResponse> nominees = new ArrayList<>();
+    private PaymentRespone paymentRespone = new PaymentRespone();
 }
 

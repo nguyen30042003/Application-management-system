@@ -39,7 +39,7 @@ public class RecruitmentInformation {
     }
 
 
-    @OneToOne(mappedBy = "recruitmentInformation",optional = false)
+    @OneToOne(mappedBy = "recruitmentInformation",optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private AdvertisingForm advertisingForm;
 

@@ -4,6 +4,8 @@ package com.example.projectcv.controller;
 import com.example.projectcv.dto.request.EnterpriseRequest;
 import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
+import com.example.projectcv.dto.response.recruitment_response.EnterpriseResponse;
+import com.example.projectcv.dto.response.recruitment_response.RecruitmentsResponse;
 import com.example.projectcv.entity.Enterprise;
 import com.example.projectcv.entity.RecruitmentInformation;
 import com.example.projectcv.services.EnterpriseService;
@@ -18,13 +20,11 @@ public class EnterpriseController {
     private EnterpriseService enterpriseService;
 
     @PostMapping()
-    public ApiResponse<Enterprise> create(@Valid @RequestBody EnterpriseRequest enterpriseRequest) {
-        ApiResponse<Enterprise> apiResponse = new ApiResponse<>();
-        apiResponse.setData(enterpriseService.create(enterpriseRequest));
-        return apiResponse;
+    public EnterpriseResponse create(@Valid @RequestBody EnterpriseRequest enterpriseRequest) {
+        return enterpriseService.create(enterpriseRequest);
     }
     @PostMapping("/{id}/recruitment")
-    public ApiResponse<RecruitmentInformation> createRecruitment(
+    public RecruitmentsResponse createRecruitment(
             @PathVariable Long id,
             @Valid @RequestBody RecruitmentInformationDTO recruitmentCreationDTO){
 
