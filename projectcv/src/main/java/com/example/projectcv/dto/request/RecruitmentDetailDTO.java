@@ -21,7 +21,6 @@ public class RecruitmentDetailDTO {
     @NotBlank(message = "Requested info cannot be blank")
     private String requestedInfo;
 
-    private Long recruitmentInformationId;
     @NotNull(message = "Nominee ID cannot be null")
     private Long nomineeId;
 }

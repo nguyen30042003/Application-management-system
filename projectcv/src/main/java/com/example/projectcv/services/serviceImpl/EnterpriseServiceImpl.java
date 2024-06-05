@@ -4,6 +4,10 @@ import com.example.projectcv.dto.request.EnterpriseRequest;
 import com.example.projectcv.dto.request.RecruitmentDetailDTO;
 import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
+import com.example.projectcv.dto.response.recruitment_response.EnterpriseResponse;
+import com.example.projectcv.dto.response.recruitment_response.NomineeResponse;
+import com.example.projectcv.dto.response.recruitment_response.PaymentRespone;
+import com.example.projectcv.dto.response.recruitment_response.RecruitmentsResponse;
 import com.example.projectcv.entity.*;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
@@ -16,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import javax.management.relation.Relation;
+
 
 
 @Service
@@ -28,7 +34,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     private PasswordEncoder passwordEncoder;
     private NomineeRepository nomineeRepository;
     @Override
-    public Enterprise create(EnterpriseRequest enterpriseRequest) {
+    public EnterpriseResponse create(EnterpriseRequest enterpriseRequest) {
         if(memberRepository.existsByEmail(enterpriseRequest.getEmail()))
         {
             throw new AppException(ErrorCode.USER_EXISTED);
@@ -38,11 +44,22 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         userAccount.setRole(Role.ENTERPRISE);
         userAccount.setPassword(passwordEncoder.encode(enterpriseRequest.getPassword()));
         Enterprise enterprise = getEnterprise(enterpriseRequest, userAccount);
+        Enterprise newEnterprise = enterpriseRepository.save(enterprise);
 
-        return enterpriseRepository.saveAndFlush(enterprise);
+        EnterpriseResponse enterpriseResponse = new EnterpriseResponse();
+        enterpriseResponse.setEnterPriseId(newEnterprise.getId());
+        enterpriseResponse.setEnterPriseName(newEnterprise.getName());
+        enterpriseResponse.setContact(newEnterprise.getContact());
+        enterpriseResponse.setEnterPriseEmail(newEnterprise.getEmail());
+        enterpriseResponse.setEnterPriseAddress(newEnterprise.getAddress());
+        enterpriseResponse.setContact(newEnterprise.getContact());
+        enterpriseResponse.setTax(newEnterprise.getTaxCode());
+        enterpriseResponse.setDateOfExpiration(newEnterprise.getDateOfExpiration());
+
+        return enterpriseResponse;
     }
 
-
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     private static Enterprise getEnterprise(EnterpriseRequest enterpriseRequest, UserAccount userAccount) {
         Enterprise enterprise = new Enterprise();
 
@@ -62,9 +79,17 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     public ApiResponse<Enterprise> getById(Long id) {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isPresent()) {
-            ApiResponse<Enterprise> apiResponse = new ApiResponse<>();
-            apiResponse.setData(enterprise.get());
-            return apiResponse;
+            Enterprise newEnterprise = enterprise.get();
+            EnterpriseResponse enterpriseResponse = new EnterpriseResponse();
+            enterpriseResponse.setEnterPriseId(newEnterprise.getId());
+            enterpriseResponse.setEnterPriseName(newEnterprise.getName());
+            enterpriseResponse.setContact(newEnterprise.getContact());
+            enterpriseResponse.setEnterPriseEmail(newEnterprise.getEmail());
+            enterpriseResponse.setEnterPriseAddress(newEnterprise.getAddress());
+            enterpriseResponse.setContact(newEnterprise.getContact());
+            enterpriseResponse.setTax(newEnterprise.getTaxCode());
+            enterpriseResponse.setDateOfExpiration(newEnterprise.getDateOfExpiration());
+            return enterpriseResponse;
         } else {
             throw new RuntimeException("Enterprise not found");
         }
@@ -73,7 +98,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @PreAuthorize("hasAuthority('ENTERPRISE')")
     @Override
-    public ApiResponse<RecruitmentInformation> createRecruitment(Long id, RecruitmentInformationDTO recruitmentCreationDTO) {
+    public RecruitmentsResponse createRecruitment(Long id, RecruitmentInformationDTO recruitmentCreationDTO) {
 
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isEmpty()) {
@@ -132,22 +157,51 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
             recruitmentDetail.setRequestedInfo(recruitmentDetailDTO.getRequestedInfo());
         }
-
-
-
         recruitmentInformation.setPayment(payment);
         AdvertisingForm advertisingForm = new AdvertisingForm();
         advertisingForm.setType(Enum.valueOf(AdvertisingType.class, recruitmentCreationDTO.getAdvertisingType()));
         recruitmentInformation.setAdvertisingForm(advertisingForm);
+       // payment.setRecruitmentInformation(recruitmentInformation);
         advertisingForm.setRecruitmentInformation(recruitmentInformation);
+        RecruitmentInformation newRecruitmentInformation = recruitmentInformationRepository.save(recruitmentInformation);
 
 
+        RecruitmentsResponse recruitmentsResponse = new RecruitmentsResponse();
+
+        EnterpriseResponse enterpriseResponse = new EnterpriseResponse();
+        enterpriseResponse.setEnterPriseId(newEnterprise.getId());
+        enterpriseResponse.setEnterPriseName(newEnterprise.getName());
+        enterpriseResponse.setContact(newEnterprise.getContact());
+        enterpriseResponse.setEnterPriseEmail(newEnterprise.getEmail());
+        enterpriseResponse.setEnterPriseAddress(newEnterprise.getAddress());
+        enterpriseResponse.setContact(newEnterprise.getContact());
+        enterpriseResponse.setTax(newEnterprise.getTaxCode());
+        enterpriseResponse.setDateOfExpiration(newEnterprise.getDateOfExpiration());
+        recruitmentsResponse.setEnterprise(enterpriseResponse);
+
+        PaymentRespone paymentRespone = new PaymentRespone();
+        paymentRespone.setId(newRecruitmentInformation.getPayment().getId());
+        paymentRespone.setTotalPayment(newRecruitmentInformation.getPayment().getTotalPayment());
+        paymentRespone.setStatus(newRecruitmentInformation.getPayment().getStatus());
+        recruitmentsResponse.setPaymentRespone(paymentRespone);
+
+        List<NomineeResponse> nomineeResponseSet = new ArrayList<>();
+        for(RecruitmentDetail recruitmentDetail : recruitmentInformation.getRecruitmentDetails())
+        {
+            NomineeResponse nomineeResponse = new NomineeResponse();
+            nomineeResponse.setNomineeId(recruitmentDetail.getNominee().getId());
+            nomineeResponse.setNomineeName(recruitmentDetail.getNominee().getName());
+            nomineeResponse.setQuantity(recruitmentDetail.getQuantity());
+            nomineeResponse.setRequestInfo(recruitmentDetail.getRequestedInfo());
+            nomineeResponseSet.add(nomineeResponse);
+        }
+        recruitmentsResponse.setNominees(nomineeResponseSet);
+
+        recruitmentsResponse.setId(newRecruitmentInformation.getId());
+        recruitmentsResponse.setTime(newRecruitmentInformation.getTime());
 
 
-        recruitmentInformationRepository.save(recruitmentInformation);;
-        ApiResponse<RecruitmentInformation> apiResponse = new ApiResponse<>();
-        apiResponse.setData(recruitmentInformation);
-        return apiResponse;
+        return recruitmentsResponse;
     }
 
 }
