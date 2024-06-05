@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class RecruitmentsResponse {
     private  long id;
-    private Date time;
+    private int time;
     private EnterpriseResponse enterprise = new EnterpriseResponse();
     private List<NomineeResponse> nominees = new ArrayList<>();
 }

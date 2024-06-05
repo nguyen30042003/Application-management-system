@@ -5,6 +5,7 @@ import com.example.projectcv.dto.request.RecruitmentDetailDTO;
 import com.example.projectcv.dto.request.RecruitmentInformationDTO;
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.entity.*;
+import com.example.projectcv.entity.composite_key.AdvertisingFormKey;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.*;
@@ -31,7 +32,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     private PasswordEncoder passwordEncoder;
     private NomineeRepository nomineeRepository;
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Enterprise create(EnterpriseRequest enterpriseRequest) {
         if(memberRepository.existsByEmail(enterpriseRequest.getEmail()))
         {
@@ -87,7 +87,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         Enterprise newEnterprise = enterprise.get();
 
         RecruitmentInformation recruitmentInformation = new RecruitmentInformation();
-        recruitmentInformation.setTime(new Date());
+        recruitmentInformation.setTime(recruitmentCreationDTO.getTime());
         recruitmentInformation.setEnterprise(newEnterprise);
 
         Payment payment = new Payment();
@@ -120,6 +120,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
             recruitmentDetail.setRequestedInfo(recruitmentDetailDTO.getRequestedInfo());
         }
         recruitmentInformation.setPayment(payment);
+        AdvertisingForm advertisingForm = new AdvertisingForm();
+        advertisingForm.setType(Enum.valueOf(Type.class, recruitmentCreationDTO.getAdvertisingType()));
+        recruitmentInformation.setAdvertisingForm(advertisingForm);
        // payment.setRecruitmentInformation(recruitmentInformation);
 
 

@@ -20,7 +20,7 @@ import java.util.Date;
 public class AdvertisingForm {
 
     @EmbeddedId
-    AdvertisingFormKey id;
+    AdvertisingFormKey id = new AdvertisingFormKey();
 
     @Column(name = "type")
     private Type type; // enum
