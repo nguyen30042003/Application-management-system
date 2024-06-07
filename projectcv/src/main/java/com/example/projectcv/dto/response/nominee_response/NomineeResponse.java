@@ -1,4 +1,4 @@
-package com.example.projectcv.dto.response.recruitment_response;
+package com.example.projectcv.dto.response.nominee_response;
 
 import lombok.Data;
 

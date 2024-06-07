@@ -25,7 +25,7 @@ public class Nominee {
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "nominee", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "nominee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecruitmentDetail> recruitmentDetails;
 
 }

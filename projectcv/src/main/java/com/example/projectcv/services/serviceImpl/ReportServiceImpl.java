@@ -4,8 +4,8 @@ import com.example.projectcv.dto.request.ReportDTO;
 import com.example.projectcv.dto.request.ReportDetailDTO;
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.dto.response.recruitment_response.EnterpriseResponse;
-import com.example.projectcv.dto.response.recruitment_response.ReportDetailRespone;
-import com.example.projectcv.dto.response.recruitment_response.ReportRespone;
+import com.example.projectcv.dto.response.report_response.ReportDetailResponse;
+import com.example.projectcv.dto.response.report_response.ReportResponse;
 import com.example.projectcv.entity.Enterprise;
 import com.example.projectcv.entity.Report;
 import com.example.projectcv.entity.ReportDetail;
@@ -29,7 +29,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ReportRespone createReportDetail(long id, ReportDTO reportDTO) {
+    public ReportResponse createReportDetail(long id, ReportDTO reportDTO) {
         Optional<Report> reportCheck = reportRepository.findById(id);
         if (reportCheck.isEmpty()) {
             throw new RuntimeException("Report is not found");
@@ -58,11 +58,11 @@ public class ReportServiceImpl implements ReportService {
 
         Report newReport = reportRepository.save(report);
 
-        ReportRespone reportRespone = new ReportRespone();
-        List<ReportDetailRespone> reportDetailResponeList = new ArrayList<>();
+        ReportResponse reportRespone = new ReportResponse();
+        List<ReportDetailResponse> reportDetailResponeList = new ArrayList<>();
         for(ReportDetail reportDetail : newReport.getReportDetails())
         {
-            ReportDetailRespone reportDetailRespone = new ReportDetailRespone();
+            ReportDetailResponse reportDetailRespone = new ReportDetailResponse();
             reportDetailRespone.set_potential(reportDetail.isPotential());
             reportDetailRespone.set_greate_potential(reportDetailRespone.is_greate_potential());
             reportDetailRespone.setStrategy(reportDetail.getStrategy());

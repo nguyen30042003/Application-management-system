@@ -1,7 +1,7 @@
 package com.example.projectcv.dto.request;
 
-import com.example.projectcv.Validator.EmailConstraint;
-import com.example.projectcv.Validator.PasswordConstraint;
+import com.example.projectcv.validator.EmailConstraint;
+import com.example.projectcv.validator.PasswordConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

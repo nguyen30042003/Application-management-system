@@ -1,4 +1,4 @@
-package com.example.projectcv.Validator;
+package com.example.projectcv.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

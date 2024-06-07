@@ -3,9 +3,8 @@ package com.example.projectcv.services.serviceImpl;
 import com.example.projectcv.dto.request.EnterpriseRequest;
 import com.example.projectcv.dto.request.RecruitmentDetailDTO;
 import com.example.projectcv.dto.request.RecruitmentInformationDTO;
-import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.dto.response.recruitment_response.EnterpriseResponse;
-import com.example.projectcv.dto.response.recruitment_response.NomineeResponse;
+import com.example.projectcv.dto.response.nominee_response.NomineeResponse;
 import com.example.projectcv.dto.response.recruitment_response.PaymentRespone;
 import com.example.projectcv.dto.response.recruitment_response.RecruitmentsResponse;
 import com.example.projectcv.entity.*;
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import javax.management.relation.Relation;
-
 
 
 @Service
@@ -80,6 +77,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if(enterprise.isPresent()) {
             Enterprise newEnterprise = enterprise.get();
+
             EnterpriseResponse enterpriseResponse = new EnterpriseResponse();
             enterpriseResponse.setEnterPriseId(newEnterprise.getId());
             enterpriseResponse.setEnterPriseName(newEnterprise.getName());
@@ -89,6 +87,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
             enterpriseResponse.setContact(newEnterprise.getContact());
             enterpriseResponse.setTax(newEnterprise.getTaxCode());
             enterpriseResponse.setDateOfExpiration(newEnterprise.getDateOfExpiration());
+
             return enterpriseResponse;
         } else {
             throw new RuntimeException("Enterprise not found");

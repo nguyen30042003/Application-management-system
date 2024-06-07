@@ -1,9 +1,8 @@
 package com.example.projectcv.controller;
 
 import com.example.projectcv.dto.request.ReportDTO;
-import com.example.projectcv.dto.request.ReportDetailDTO;
 import com.example.projectcv.dto.response.ApiResponse;
-import com.example.projectcv.dto.response.recruitment_response.ReportRespone;
+import com.example.projectcv.dto.response.report_response.ReportResponse;
 import com.example.projectcv.entity.Report;
 import com.example.projectcv.services.ReportService;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,7 @@ public class ReportController {
         return reportService.create();
     }
     @PostMapping("/{id}/reportDetails")
-    public ReportRespone createReport(@PathVariable long id, @RequestBody ReportDTO reportDTO) {
+    public ReportResponse createReport(@PathVariable long id, @RequestBody ReportDTO reportDTO) {
         return reportService.createReportDetail(id, reportDTO);
     }
 }

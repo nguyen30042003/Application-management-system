@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "application_form")
 public class ApplicationForm {
     @EmbeddedId
-   private ApplicationFormKey id;
+   private ApplicationFormKey id = new ApplicationFormKey();
 
     @ManyToOne(optional = false)
     @MapsId("recruitmentDetailKeyId")

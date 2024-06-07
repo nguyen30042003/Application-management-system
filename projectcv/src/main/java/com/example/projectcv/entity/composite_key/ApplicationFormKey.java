@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class ApplicationFormKey {
 
-    private RecruitmentDetailKey recruitmentDetailKeyId;
+    private RecruitmentDetailKey recruitmentDetailKeyId = new RecruitmentDetailKey();
 
     @Column(name = "candidate_id")
     private long candidateId;

@@ -2,9 +2,8 @@ package com.example.projectcv.services.serviceImpl;
 
 import com.example.projectcv.dto.response.ApiResponse;
 import com.example.projectcv.dto.response.recruitment_response.EnterpriseResponse;
-import com.example.projectcv.dto.response.recruitment_response.NomineeResponse;
+import com.example.projectcv.dto.response.nominee_response.NomineeResponse;
 import com.example.projectcv.dto.response.recruitment_response.RecruitmentsResponse;
-import com.example.projectcv.entity.Nominee;
 import com.example.projectcv.entity.RecruitmentInformation;
 import com.example.projectcv.repository.RecruitmentInformationRepository;
 import com.example.projectcv.services.RecruitmentInformationService;

@@ -2,8 +2,6 @@ package com.example.projectcv.services.serviceImpl;
 
 import com.example.projectcv.dto.request.MemberDTO;
 import com.example.projectcv.dto.response.ApiResponse;
-import com.example.projectcv.dto.response.Meta;
-import com.example.projectcv.dto.response.PageResponse;
 import com.example.projectcv.entity.Member;
 import com.example.projectcv.exception.AppException;
 import com.example.projectcv.exception.ErrorCode;
@@ -22,8 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -65,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @PostAuthorize("returnObject.data.email == authentication.name or hasAnyAuthority('ADMIN')")
+    @PreAuthorize("#id == authentication.principal.id")
     public ApiResponse<Member> updateMember(Long id, MemberDTO memberDTO) {
         Member member = memberRepository.findById(id).
                 orElseThrow(() ->
@@ -76,5 +72,9 @@ public class MemberServiceImpl implements MemberService {
         member.setContact(memberDTO.getContact());
         memberRepository.save(member);
         return new ApiResponse<>(member);
-    };
+    }
+
+
+
+
 }

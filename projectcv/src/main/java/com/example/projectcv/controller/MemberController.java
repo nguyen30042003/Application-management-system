@@ -33,4 +33,6 @@ public class MemberController {
     public ApiResponse<Member> updateMember(@PathVariable Long id, @RequestBody MemberDTO memberDTO) {
         return memberService.updateMember(id,memberDTO);
     }
+
+
 }
