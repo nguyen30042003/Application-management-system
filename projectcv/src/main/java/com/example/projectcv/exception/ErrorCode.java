@@ -15,6 +15,7 @@ public enum ErrorCode {
     NOMINEE_NOT_EXISTED(1005,"Nominee no existed",404),
     ENTERPRISE_NOT_EXISTED(1006,"Enterprise no existed",404),
     MEMBER_NOT_EXISTED(1007, "Member not existed", 404),
+    REPORT_NOT_EXISTED(1008,"Report not existed", 404 ),
     ;
     private final int code;
     private final String message;

@@ -22,6 +22,7 @@ public class PaymentDTO {
     @NotNull(message = "Full payment status cannot be null")
     boolean isFullPayment;
 
+    @NotNull(message = "Payment type cannot be null")
     String type;
 
     InvoiceDTO invoiceDTO;

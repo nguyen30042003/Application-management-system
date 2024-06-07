@@ -9,12 +9,12 @@ import lombok.Setter;
 
 @Data
 public class ReportDetailDTO {
-    @NotNull(message = "Full payment status cannot be null")
+    @NotNull(message = "Set potential cannot be null")
     boolean isPotential;
-    @NotNull(message = "Full payment status cannot be null")
+    @NotNull(message = "Set greate potential cannot be null")
     boolean isGreatPotential;
-    @NotNull(message = "Full payment status cannot be null")
+    @NotNull(message = "Strategy cannot be null")
     String strategy;
-    @NotNull(message = "Full payment status cannot be null")
+    @NotNull(message = "Enterprise not null")
     long enterpriseId;
 }

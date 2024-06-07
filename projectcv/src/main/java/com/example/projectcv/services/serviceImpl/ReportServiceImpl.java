@@ -10,6 +10,8 @@ import com.example.projectcv.entity.Enterprise;
 import com.example.projectcv.entity.Report;
 import com.example.projectcv.entity.ReportDetail;
 import com.example.projectcv.entity.composite_key.ReportDetailKey;
+import com.example.projectcv.exception.AppException;
+import com.example.projectcv.exception.ErrorCode;
 import com.example.projectcv.repository.EnterpriseRepository;
 import com.example.projectcv.repository.ReportDetailRepository;
 import com.example.projectcv.repository.ReportRepository;
@@ -32,7 +34,7 @@ public class ReportServiceImpl implements ReportService {
     public ReportResponse createReportDetail(long id, ReportDTO reportDTO) {
         Optional<Report> reportCheck = reportRepository.findById(id);
         if (reportCheck.isEmpty()) {
-            throw new RuntimeException("Report is not found");
+            throw new AppException(ErrorCode.REPORT_NOT_EXISTED);
         }
         Report report = reportCheck.get();
         Set<ReportDetail> reportDetails  = new HashSet<>();
@@ -40,7 +42,7 @@ public class ReportServiceImpl implements ReportService {
         {
             Optional<Enterprise> enterprise = enterpriseRepository.findById(reportDetailDTO.getEnterpriseId());
             if (enterprise.isEmpty()) {
-                throw new RuntimeException("Enterprise is not found");
+                throw new AppException(ErrorCode.ENTERPRISE_NOT_EXISTED);
             }
             ReportDetail reportDetail = new ReportDetail();
             ReportDetailKey reportDetailKey = new ReportDetailKey(report.getId(), enterprise.get().getId());

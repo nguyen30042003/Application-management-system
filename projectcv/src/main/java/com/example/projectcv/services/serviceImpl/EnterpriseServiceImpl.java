@@ -90,7 +90,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
             return enterpriseResponse;
         } else {
-            throw new RuntimeException("Enterprise not found");
+            throw new AppException(ErrorCode.ENTERPRISE_NOT_EXISTED);
         }
     }
 
